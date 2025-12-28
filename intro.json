@@ -1,0 +1,130 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up","Yo","Say Sum"],
+         "responses": ["Hello!", "Good to see you again!", "Hi there, how can I help?"],
+         "context_set": ""
+        },
+        {"tag": "goodbye",
+         "patterns": ["cya", "See you later", "Goodbye", "I am Leaving", "Have a Good day","Bye","Get Out"],
+         "responses": ["Sad to see you go :(", "Talk to you later", "Goodbye!","Bye Bye"],
+         "context_set": ""
+        },
+        {"tag": "age",
+         "patterns": ["how old", "how old is Atharva", "what is Atharva's age", "age?"],
+         "responses": ["I am 20 years old!", "20 years young!"],
+         "context_set": ""
+        },
+        {"tag": "name",
+         "patterns": ["what is your name", "what should I call you", "whats your name?"],
+         "responses": ["You can call me Atharva.", "I'm Atharva!"],
+         "context_set": ""
+        },
+        {"tag": "skill",
+		 "patterns": [
+		 "What is your tech stack?",
+		 "What are your skills?",
+		 "What do you know?",
+		 "Skills?",
+		 "What technologies do you use?",
+		 "What languages do you know?"
+		 ],
+		 "responses": [
+		 "I work with several programming languages including C, C++, Python, JavaScript, and SQL. I also use technologies such as NumPy, OpenCV, HTML, CSS, and YamNet, along with tools like Git/GitHub, VS Code, CLion, and Vercel.",
+		 "My technical skill set includes C, C++, Python, JavaScript, and SQL. I have experience with NumPy, OpenCV, HTML, CSS, and YamNet, and I regularly use Git/GitHub, VS Code, CLion, and Vercel for development.",
+		 "I have hands-on experience across different areas of development. I code mainly in C, C++, Python, JavaScript, and SQL, work with NumPy, OpenCV, HTML, CSS, and YamNet, and use tools like Git/GitHub, VS Code, CLion, and Vercel.",
+		 "I’m comfortable working with multiple technologies. My core languages are C, C++, Python, JavaScript, and SQL. On the technology side, I use NumPy, OpenCV, HTML, CSS, and YamNet, and for tooling I rely on Git/GitHub, VS Code, CLion, and Vercel.",
+		 "My skill set combines programming, technology, and tooling. I use C, C++, Python, JavaScript, and SQL for development, apply technologies like NumPy, OpenCV, HTML, CSS, and YamNet, and manage projects using Git/GitHub, VS Code, CLion, and Vercel."
+		],
+		"context_set": ""
+        },
+        {
+		"tag": "intro",
+		"patterns": [
+			"Who are you?",
+			"Introduce yourself",
+			"Tell me about yourself",
+			"What is this portfolio?",
+			"Who is Atharva?"
+		],
+		"responses": [
+			"Hi, my name is Atharva Mahule. This is my portfolio where I showcase my skills, projects, and interests in technology and development.",
+			"I’m Atharva Mahule. This portfolio highlights my technical skills, projects, and passion for software development and AI."
+		],
+		"context_set": ""
+		},
+		{
+		"tag": "roles",
+		"patterns": [
+			"What are you passionate about?",
+			"What roles do you work in?",
+			"What do you do?",
+			"Are you a web developer?",
+			"Are you into AI or ML?"
+		],
+		"responses": [
+			"I’m passionate about technology and problem solving. I work as a web developer, an AI and machine learning enthusiast, and a competitive programmer.",
+			"My interests include web development, artificial intelligence and machine learning, and competitive programming."
+		],
+		"context_set": ""
+		},
+		{
+		"tag": "projects",
+		"patterns": [
+			"What projects have you built?",
+			"Tell me about your projects",
+			"What are your major projects?",
+			"Show me your work",
+			"projects"
+		],
+		"responses": [
+			"I have worked on multiple projects, including a GPT-style chatbot trained on the Harry Potter book series and an audio event classification system using Google’s YAMNet model.",
+			"Some of my key projects include Harry’s Gibberish ChatBot, a transformer-based language model chatbot, and an audio classification system built using TensorFlow Hub’s YAMNet."
+		],
+		"context_set": ""
+		},
+		{
+		"tag": "project_details",
+		"patterns": [
+			"Tell me more about your chatbot project",
+			"What is Harry's Gibberish ChatBot?",
+			"Explain your AI projects",
+			"What is the appointment management project?"
+		],
+		"responses": [
+			"Harry’s Gibberish ChatBot is a custom GPT-style transformer language model trained on the complete Harry Potter book corpus. It uses character-level tokenization, multi-head self-attention, and autoregressive text generation, and is deployed through a simple web interface.",
+			"One of my projects uses Google’s pre-trained YAMNet model to classify real-world audio events. It processes audio signals, runs inference, and ranks sound classes based on confidence scores."
+		],
+		"context_set": ""
+		},
+		{
+		"tag": "contact",
+		"patterns": [
+			"How can I contact you?",
+			"Get in touch",
+			"Contact details",
+			"Where can I reach you?",
+			"How do I connect with you?"
+		],
+		"responses": [
+			"You can reach out to me through my LinkedIn profile, GitHub account, or email, which are available in the contact section of my portfolio.",
+			"I’m available on LinkedIn, GitHub, and email. You can find all contact links in the footer of my portfolio."
+		],
+		"context_set": ""
+		},
+		{
+		"tag": "resume",
+		"patterns": [
+			"Can I see your resume?",
+			"Do you have a resume?",
+			"Show me your resume",
+			"Where is your CV?"
+		],
+		"responses": [
+			"You can access my resume directly from the portfolio using the Resume button.",
+			"My resume is available on the portfolio page and can be accessed through the Resume option."
+		],
+		"context_set": ""
+		}
+
+   ]
+}

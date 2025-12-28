@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atharva's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='chatbot.css') }}"
+    />
+    <!-- Using Lucide for Icons since local images might not load in preview -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --primary-color: rgb(0, 163, 163);
+        --primary-glow: rgba(0, 163, 163, 0.6);
+        --bg-color: #0f1212;
+        --card-bg: #1a2020;
+        --text-color: #e0e0e0;
+        --heading-font: "Bitcount Prop Single", system-ui;
+        --body-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: var(--body-font);
+        line-height: 1.6;
+      }
+
+      /* Navigation */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+        background-color: rgba(0, 20, 20, 0.95);
+        border-bottom: 2px solid var(--primary-color);
+        padding: 0 5%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+      }
+
+      .logo {
+        font-family: var(--heading-font);
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 30px;
+      }
+
+      nav ul li {
+        list-style: none;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-family: var(--heading-font);
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        color: var(--primary-color);
+        text-shadow: 0 0 10px var(--primary-glow);
+      }
+
+      /* Hero Section */
+      .firstsection {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 80vh;
+        padding: 0 10%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .leftsection {
+        width: 55%;
+        font-family: var(--heading-font);
+        font-size: 2.5rem;
+        line-height: 1.2;
+        z-index: 2;
+      }
+
+      .green {
+        color: var(--primary-color);
+        text-shadow: 0 0 5px var(--primary-glow);
+      }
+
+      #element {
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .rightsection {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .rightsection img {
+        width: 100%;
+        max-width: 400px;
+        filter: drop-shadow(0 0 20px var(--primary-glow));
+        border-radius: 20px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /*@keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }*/
+
+      /* Buttons */
+      .Buttons1 {
+        display: flex;
+        gap: 20px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+      }
+
+      .Buttons1 button {
+        background-color: transparent;
+        color: var(--primary-color);
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: var(--heading-font);
+        font-weight: 600;
+        border: 2px solid var(--primary-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .Buttons1 button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--primary-color);
+        transition: left 0.3s ease;
+        z-index: -1;
+      }
+
+      .Buttons1 button:hover {
+        color: black;
+        box-shadow: 0 0 15px var(--primary-glow);
+        transform: translateY(-3px);
+      }
+
+      .Buttons1 button:hover::before {
+        left: 0;
+      }
+
+      /* Divider */
+      .line1 {
+        border: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--primary-color),
+          transparent
+        );
+        margin: 50px auto;
+        width: 80%;
+        opacity: 0.5;
+      }
+
+      /* Section Headers */
+      .section-heading {
+        font-family: var(--heading-font);
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 40px;
+        color: white;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Technical Arsenal (Grid Layout) */
+      .secondsection {
+        padding: 20px 10%;
+      }
+
+      .contentSec {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+
+      .tech-card {
+        background-color: var(--card-bg);
+        border: 1px solid rgba(0, 163, 163, 0.3);
+        border-radius: 16px;
+        padding: 40px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tech-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--primary-color);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .tech-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-color: var(--primary-color);
+      }
+
+      .tech-card:hover::before {
+        opacity: 1;
+      }
+
+      .tech-card img {
+        height: 60px;
+        margin-bottom: 20px;
+        object-fit: contain;
+      }
+
+      .tech-icon-placeholder {
+        margin-bottom: 20px;
+        color: var(--primary-color);
+      }
+
+      .tech-card h3 {
+        font-family: var(--heading-font);
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      .tech-card p {
+        color: #aaa;
+        font-size: 1rem;
+      }
+
+      /* Projects Section */
+      .thirdsection {
+        padding: 20px 10%;
+        margin-bottom: 60px;
+      }
+
+      .projects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .project-card {
+        background-color: var(--card-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        transition: all 0.3s ease;
+        border-left: 5px solid var(--primary-color);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .project-card:hover {
+        border-color: white;
+        box-shadow: 0 0 20px rgba(0, 163, 163, 0.15);
+        transform: scale(1.02);
+      }
+
+      .project-card h3 {
+        font-family: var(--heading-font);
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+      }
+
+      .project-card p {
+        font-size: 1rem;
+        color: #bbb;
+        flex-grow: 1;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #080808;
+        border-top: 1px solid #333;
+        padding: 40px 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer1 h5 {
+        font-family: var(--heading-font);
+        font-size: 1.8rem;
+        color: white;
+      }
+
+      .footer2 {
+        display: flex;
+        gap: 25px;
+      }
+
+      .footer-icon-link {
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .footer-icon-link:hover {
+        color: var(--primary-color);
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 5px var(--primary-color));
+      }
+
+      .footer-icon-link svg {
+        width: 30px;
+        height: 30px;
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .firstsection {
+          flex-direction: column-reverse;
+          text-align: center;
+          padding-top: 120px;
+          min-height: auto;
+          padding-bottom: 50px;
+        }
+
+        .leftsection {
+          width: 100%;
+          font-size: 1.8rem;
+          margin-top: 30px;
+        }
+
+        .rightsection {
+          width: 100%;
+        }
+
+        .Buttons1 {
+          justify-content: center;
+        }
+
+        nav {
+          padding: 0 20px;
+        }
+
+        .nav-links {
+          display: none; /* Simplified for this demo */
+        }
+
+        .projects-container {
+          grid-template-columns: 1fr;
+        }
+
+        .logo {
+          font-size: 1.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">Atharva's Portfolio</div>
+        <div class="right">
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skill">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#footer">Contact Me</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="firstsection" id="home">
+        <div class="leftsection">
+          Hi, my name is <br /><span class="green">Atharva Mahule</span>
+          <div
+            style="
+              font-size: 1.5rem;
+              margin-top: 15px;
+              font-family: var(--body-font);
+              color: #aaa;
+            "
+          >
+            I am a <span id="element"></span>
+          </div>
+
+          <div class="Buttons1">
+            <button>Get in Touch</button>
+            <button class="chatbot__button">Ask my AI</button>
+            <button>Resume</button>
+          </div>
+        </div>
+        <div class="rightsection">
+          <!-- Using a placeholder since local image ./images/bg.png won't exist in preview -->
+          <img
+            src="./images/bg.png"
+            onerror="this.src='https://placehold.co/400x400/1a2020/00a3a3?text=Profile+Image'"
+            alt="Profile Image"
+          />
+        </div>
+      </section>
+
+      <hr class="line1" />
+
+      <section class="secondsection" id="skill">
+        <h3 class="section-heading">Technical Arsenal</h3>
+
+        <div class="contentSec">
+          <div class="tech-card">
+            <!-- Fallback to lucide icon if image missing -->
+            <img
+              src="./images/CP.png"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+              alt="Code Icon"
+            />
+            <div class="tech-icon-placeholder" style="display: none">
+              <i data-lucide="code-2" width="60" height="60"></i>
+            </div>
+
+            <h3>Languages</h3>
+            <p>C, C++, Python, JavaScript, SQL</p>
+          </div>
+
+          <div class="tech-card">
+            <img
+              src="./images/AI_ML.png"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+              alt="AI Icon"
+            />
+            <div class="tech-icon-placeholder" style="display: none">
+              <i data-lucide="brain-circuit" width="60" height="60"></i>
+            </div>
+            <h3>Technologies</h3>
+            <p>Numpy, OpenCV, HTML, CSS, YamNet</p>
+          </div>
+
+          <div class="tech-card">
+            <img
+              src="./images/man.png"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+              alt="Tools Icon"
+            />
+            <div class="tech-icon-placeholder" style="display: none">
+              <i data-lucide="wrench" width="60" height="60"></i>
+            </div>
+            <h3>Tools</h3>
+            <p>Git/Github, VS Code, CLion, Vercel</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="line1" />
+
+      <section class="thirdsection" id="projects">
+        <h3 class="section-heading">Projects</h3>
+        <div class="projects-container">
+          <!-- Project 1 -->
+          <div class="project-card">
+            <h3>Harry's Gibberish ChatBot</h3>
+            <p>
+              This project implements a custom GPT-style transformer language
+              model trained on the complete Harry Potter book corpus and
+              deployed as an interactive chatbot using Gradio. The model
+              performs character-level tokenization, multi-head self-attention,
+              and autoregressive text generation.
+            </p>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card">
+            <h3>Appointment Management</h3>
+            <p>
+              This project uses Google’s pre-trained YAMNet model from
+              TensorFlow Hub to perform audio event classification on real-world
+              sound recordings. It preprocesses audio by resampling to 16 kHz
+              and ranks predicted sound classes to exclude non-informative
+              labels such as silence.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="footer1">
+        <h5>Contact Me</h5>
+      </div>
+      <div class="footer2">
+        <a
+          href="https://www.linkedin.com/in/atharva-mahule/"
+          class="footer-icon-link"
+          ><i data-lucide="linkedin"></i
+        ></a>
+        <a href="https://github.com/AtharvaM25" class="footer-icon-link"
+          ><i data-lucide="github"></i
+        ></a>
+        <a href="#" class="footer-icon-link"><i data-lucide="mail"></i></a>
+      </div>
+    </footer>
+
+    <!-- Typed.js Script -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+      // Initialize Typed.js
+      var typed = new Typed("#element", {
+        strings: [
+          "Web Developer.",
+          "AI & ML Enthusiast.",
+          "Competitive Programmer.",
+        ],
+        typeSpeed: 75,
+        backSpeed: 50,
+        loop: true,
+      });
+
+      // Initialize Lucide Icons
+      lucide.createIcons();
+    </script>
+    <!-- Chatbot Widget -->
+    <div id="" class="chatbot__box">
+      <div class="chatbot-header">
+        <span>Ask My AI</span>
+        <button class="chatbot__button">✕</button>
+      </div>
+
+      <div id="chat-messages" class="chatbot__messages"></div>
+
+      <div class="chatbot-input">
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button class="send__button">Send</button>
+      </div>
+    </div>
+    <script>
+      $SCRIPT_ROOT={{request.script_root|tojson}};
+    </script>
+    <script
+      type="text/javascript"
+      src="{{url_for('static',filename='app.js')}}"
+    ></script>
+  </body>
+</html>
