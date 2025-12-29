@@ -1,6 +1,5 @@
 Flask
 tensorflow
-tflearn
 nltk
 numpy
 gunicorn
