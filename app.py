@@ -7,6 +7,12 @@ from nltk.stem.lancaster import LancasterStemmer
 import pickle
 import os
 
+print("DEBUG: Current Directory:", os.getcwd())
+if os.path.exists("models"):
+    print("DEBUG: Contents of 'models' folder:", os.listdir("models"))
+else:
+    print("DEBUG: 'models' folder NOT FOUND!")
+
 nltk.download('punkt', download_dir='./nltk_data')
 nltk.data.path.append('./nltk_data')
 
