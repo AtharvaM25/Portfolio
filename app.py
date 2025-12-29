@@ -7,17 +7,16 @@ from nltk.stem.lancaster import LancasterStemmer
 import pickle
 import os
 
-nltk.download('punkt')
+nltk.download('punkt', download_dir='./nltk_data')
+nltk.data.path.append('./nltk_data')
 
 stemmer = LancasterStemmer()
 
 with open("intro.json") as file:
     data = json.load(file)
 
-try:
-    with open("models/data.pickle", "rb") as f:
-        words, labels, training, output = pickle.load(f)
-except:
+def train_model():
+    print("Training new model...")
     words = []
     labels = []
     docs_x = []
@@ -43,9 +42,7 @@ except:
 
     for x, doc in enumerate(docs_x):
         bag = []
-
         wrds = [stemmer.stem(w.lower()) for w in doc]
-
         for w in words:
             if w in wrds:
                 bag.append(1)
@@ -63,33 +60,36 @@ except:
     
     if not os.path.exists("models"):
         os.makedirs("models")
-        
+
     with open("models/data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output), f)
+        
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(8, input_shape=(len(training[0]),), activation='relu'),
+        tf.keras.layers.Dense(8, activation='relu'),
+        tf.keras.layers.Dense(len(output[0]), activation='softmax')
+    ])
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.fit(training, output, epochs=1000, batch_size=8, verbose=0) # verbose=0 to reduce logs
+    model.save("models/chat_model.keras")
+    
+    return words, labels, training, output, model
 
-
-model = tf.keras.Sequential([
-    tf.keras.layers.Dense(8, input_shape=(len(training[0]),), activation='relu'),
-    tf.keras.layers.Dense(8, activation='relu'),
-    tf.keras.layers.Dense(len(output[0]), activation='softmax')
-])
-
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
-model_path = "models/chat_model.keras"
-
-if os.path.exists(model_path):
-    try:
+try:
+    with open("models/data.pickle", "rb") as f:
+        words, labels, training, output = pickle.load(f)
+    
+    model_path = "models/chat_model.keras"
+    if os.path.exists(model_path):
         model = tf.keras.models.load_model(model_path)
         print("Model loaded successfully.")
-    except Exception as e:
-        print(f"Could not load model: {e}. Training new model...")
-        model.fit(training, output, epochs=1000, batch_size=8, verbose=1)
-        model.save(model_path)
-else:
-    print("Model not found. Training new model...")
-    model.fit(training, output, epochs=1000, batch_size=8, verbose=1)
-    model.save(model_path)
+    else:
+        raise Exception("Model file missing")
+        
+except Exception as e:
+    print(f"Error loading model/data: {e}. Retraining...")
+    words, labels, training, output, model = train_model()
+
 
 def bag_of_words(s, words):
     bag = [0 for x in range(len(words))]
@@ -102,6 +102,7 @@ def bag_of_words(s, words):
                 bag[i] = 1
 
     return np.array(bag)
+
 
 def chat(inp):
     input_data = np.array([bag_of_words(inp, words)])
