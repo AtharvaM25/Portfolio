@@ -7,18 +7,26 @@ from nltk.stem.lancaster import LancasterStemmer
 import pickle
 import os
 
-print("DEBUG: Current Directory:", os.getcwd())
-if os.path.exists("models"):
-    print("DEBUG: Contents of 'models' folder:", os.listdir("models"))
-else:
-    print("DEBUG: 'models' folder NOT FOUND!")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(BASE_DIR, 'models')
+MODEL_FILE = os.path.join(MODELS_DIR, 'chat_model.keras')
+DATA_FILE = os.path.join(MODELS_DIR, 'data.pickle')
+NLTK_DIR = os.path.join(BASE_DIR, 'nltk_data')
 
-nltk.download('punkt', download_dir='./nltk_data')
-nltk.data.path.append('./nltk_data')
+print(f"DEBUG: Base Directory is: {BASE_DIR}")
+print(f"DEBUG: Looking for models in: {MODELS_DIR}")
+if os.path.exists(MODELS_DIR):
+    print(f"DEBUG: 'models' folder contents: {os.listdir(MODELS_DIR)}")
+else:
+    print(f"DEBUG: CRITICAL - 'models' folder does not exist at {MODELS_DIR}")
+
+nltk.download('punkt', download_dir=NLTK_DIR)
+nltk.data.path.append(NLTK_DIR)
 
 stemmer = LancasterStemmer()
 
-with open("intro.json") as file:
+json_path = os.path.join(BASE_DIR, "intro.json")
+with open(json_path) as file:
     data = json.load(file)
 
 def train_model():
@@ -64,10 +72,10 @@ def train_model():
     training = np.array(training)
     output = np.array(output)
     
-    if not os.path.exists("models"):
-        os.makedirs("models")
+    if not os.path.exists(MODELS_DIR):
+        os.makedirs(MODELS_DIR)
 
-    with open("models/data.pickle", "wb") as f:
+    with open(DATA_FILE, "wb") as f:
         pickle.dump((words, labels, training, output), f)
         
     model = tf.keras.Sequential([
@@ -76,20 +84,20 @@ def train_model():
         tf.keras.layers.Dense(len(output[0]), activation='softmax')
     ])
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    model.fit(training, output, epochs=1000, batch_size=8, verbose=0) # verbose=0 to reduce logs
-    model.save("models/chat_model.keras")
+    model.fit(training, output, epochs=1000, batch_size=8, verbose=0)
+    model.save(MODEL_FILE)
     
     return words, labels, training, output, model
 
 try:
-    with open("models/data.pickle", "rb") as f:
+    with open(DATA_FILE, "rb") as f:
         words, labels, training, output = pickle.load(f)
     
-    model_path = "models/chat_model.keras"
-    if os.path.exists(model_path):
-        model = tf.keras.models.load_model(model_path)
+    if os.path.exists(MODEL_FILE):
+        model = tf.keras.models.load_model(MODEL_FILE)
         print("Model loaded successfully.")
     else:
+        print(f"DEBUG: File missing: {MODEL_FILE}")
         raise Exception("Model file missing")
         
 except Exception as e:
