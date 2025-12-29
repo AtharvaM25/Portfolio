@@ -1,1 +1,1 @@
-web: gunicorn connect:connect
+web: gunicorn connect:connect --bind 0.0.0.0:$PORT --timeout 120
