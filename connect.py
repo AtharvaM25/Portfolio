@@ -6,7 +6,7 @@ connect = Flask(__name__)
 
 @connect.get("/")
 def index_get():
-    return render_template("geminiVersion.html")
+    return render_template("index.html")
 
 
 @connect.post("/predict")
