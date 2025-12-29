@@ -25,11 +25,6 @@ venv/
 env/
 ENV/
 
-# Models (Large files - should not be uploaded)
-models/
-*.pickle
-*.pkl
-
 # IDE & Editor
 .vscode/
 .idea/
