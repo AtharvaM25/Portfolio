@@ -22,9 +22,7 @@ if not os.path.exists(MODELS_DIR):
     os.makedirs(MODELS_DIR)
 
 if os.path.exists(MODELS_DIR):
-    print(f"DEBUG: 'models' folder contents: {os.listdir(MODELS_DIR)}")
-else:
-    print(f"DEBUG: CRITICAL - 'models' folder does not exist at {MODELS_DIR}")
+    print(f"DEBUG: 'models' folder contents: {os.listdir(MODELS_DIR) if os.listdir(MODELS_DIR) else 'EMPTY'}")
 
 # Download NLTK data
 try:
@@ -106,31 +104,59 @@ def train_model():
     # Reduced epochs for faster training on deployment
     model.fit(training, output, epochs=500, batch_size=8, verbose=0)
     
-    model.save(MODEL_FILE)
-    print("✅ Model trained and saved successfully!")
+    # Save model with error handling
+    try:
+        model.save(MODEL_FILE)
+        print(f"✅ Model saved successfully to: {MODEL_FILE}")
+    except Exception as e:
+        print(f"❌ Error saving model: {e}")
+        raise
+    
     print("=" * 50)
     
     return words, labels, training, output, model
 
-# Try to load existing model and data
-try:
-    print("📂 Attempting to load existing model and data...")
-    
-    with open(DATA_FILE, "rb") as f:
-        words, labels, training, output = pickle.load(f)
-    print("✅ Data loaded successfully")
-    
-    if os.path.exists(MODEL_FILE):
+# Initialize variables
+words = None
+labels = None
+training = None
+output = None
+model = None
+
+# Check if both files exist before trying to load
+data_exists = os.path.exists(DATA_FILE)
+model_exists = os.path.exists(MODEL_FILE)
+
+print(f"📊 Data file exists: {data_exists}")
+print(f"🤖 Model file exists: {model_exists}")
+
+if data_exists and model_exists:
+    # Both files exist, try to load them
+    try:
+        print("📂 Attempting to load existing model and data...")
+        
+        with open(DATA_FILE, "rb") as f:
+            words, labels, training, output = pickle.load(f)
+        print("✅ Data loaded successfully")
+        
         model = tf.keras.models.load_model(MODEL_FILE)
         print("✅ Model loaded successfully!")
-    else:
-        print(f"⚠️  Model file not found at: {MODEL_FILE}")
-        raise FileNotFoundError("Model file missing")
         
-except Exception as e:
-    print(f"⚠️  Error loading model/data: {e}")
+    except Exception as e:
+        print(f"⚠️  Error loading existing files: {e}")
+        print("🔄 Will train new model...")
+        words, labels, training, output, model = train_model()
+else:
+    # Files don't exist, train new model
+    print("⚠️  Model or data files not found")
     print("🔄 Starting training process...")
     words, labels, training, output, model = train_model()
+
+# Verify everything loaded correctly
+if words is None or labels is None or model is None:
+    raise Exception("Failed to initialize model and data!")
+
+print("\n✅ Chatbot initialization complete!")
 
 
 def bag_of_words(s, words):
