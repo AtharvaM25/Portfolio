@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -363,7 +363,6 @@
         height: 30px;
       }
 
-      /* Mobile Responsiveness */
       @media (max-width: 768px) {
         .firstsection {
           flex-direction: column-reverse;
@@ -445,7 +444,10 @@
           <!-- Using a placeholder since local image ./images/bg.png won't exist in preview -->
           <img
             src="./static/images/bg.png"
-            onerror="this.src='https://placehold.co/400x400/1a2020/00a3a3?text=Profile+Image'"
+            onerror="
+              this.src =
+                'https://placehold.co/400x400/1a2020/00a3a3?text=Profile+Image'
+            "
             alt="Profile Image"
           />
         </div>
@@ -461,7 +463,10 @@
             <!-- Fallback to lucide icon if image missing -->
             <img
               src="./static/images/CP.png"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'block';
+              "
               alt="Code Icon"
             />
             <div class="tech-icon-placeholder" style="display: none">
@@ -475,7 +480,10 @@
           <div class="tech-card">
             <img
               src="./static/images/AI_ML.png"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'block';
+              "
               alt="AI Icon"
             />
             <div class="tech-icon-placeholder" style="display: none">
@@ -488,7 +496,10 @@
           <div class="tech-card">
             <img
               src="./static/images/man.png"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'block';
+              "
               alt="Tools Icon"
             />
             <div class="tech-icon-placeholder" style="display: none">
