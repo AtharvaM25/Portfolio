@@ -9,7 +9,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, 'models')
-MODEL_FILE = os.path.join(MODELS_DIR, 'chat_model.keras')
+MODEL_FILE = os.path.join(MODELS_DIR, 'chat_model.h5')
 DATA_FILE = os.path.join(MODELS_DIR, 'data.pickle')
 NLTK_DIR = os.path.join(BASE_DIR, 'nltk_data')
 
@@ -98,7 +98,7 @@ def train_and_save():
     ])
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     model.fit(training, output, epochs=500, batch_size=8, verbose=1)
-    model.save(MODEL_FILE)
+    model.save(MODEL_FILE,save_format='h5')
     print(f"Model saved to {MODEL_FILE}")
     print("You can now commit the models/ folder and deploy.")
 
